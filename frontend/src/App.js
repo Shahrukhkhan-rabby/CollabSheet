@@ -1,32 +1,29 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import "./index.css";
 
-const App = () => {
+function App() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/users") // Fetching data from the new backend API route
-      .then((response) => {
-        setUsers(response.data); // Setting the users data from the response
-      })
-      .catch((error) => {
-        console.error("Error fetching data from backend:", error);
-      });
+    // Fetch data from the backend API
+    fetch("http://localhost:5000/api/users")
+      .then((response) => response.json())
+      .then((data) => setUsers(data))
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   return (
-    <div>
-      <h1>User List:</h1>
+    <div className="App">
+      <h1>User List</h1>
       <ul>
         {users.map((user) => (
-          <li key={user.id}>
+          <li key={user._id}>
             {user.name} - {user.email}
           </li>
         ))}
       </ul>
     </div>
   );
-};
+}
 
 export default App;
