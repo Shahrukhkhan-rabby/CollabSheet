@@ -1,28 +1,17 @@
-import React, { useEffect, useState } from "react";
-import "./index.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login"; // Make sure this path is correct
+import UserPanel from "./pages/UserPanel";
+import AdminPanel from "./pages/AdminPanel";
 
 function App() {
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    // Fetch data from the backend API
-    fetch("http://localhost:5000/api/users")
-      .then((response) => response.json())
-      .then((data) => setUsers(data))
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
-
   return (
-    <div className="App">
-      <h1>User List</h1>
-      <ul>
-        {users.map((user) => (
-          <li key={user._id}>
-            {user.name} - {user.email}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/user" element={<UserPanel />} />
+        <Route path="/admin" element={<AdminPanel />} />
+      </Routes>
+    </Router>
   );
 }
 
