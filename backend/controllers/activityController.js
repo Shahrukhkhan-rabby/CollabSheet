@@ -4,6 +4,7 @@ const Activity = require("../models/activityModel");
 const logActivity = async (req, res) => {
   try {
     const { action } = req.body;
+
     const newActivity = new Activity({
       user: req.user._id,
       action,
